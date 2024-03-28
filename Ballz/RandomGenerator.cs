@@ -27,7 +27,8 @@ namespace Ballz
 
         public static float GetRandomFloat(int min, int max)
         {
-            return (float)(rand.Next(min, max+1))*0.1f;
+            float r = (float)(rand.Next(min, 101)) * 0.01f;
+            return r;
         }
     }
 }

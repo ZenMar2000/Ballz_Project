@@ -72,9 +72,6 @@
     <Compile Include="Engine\Physics\PhysicsMngr.cs" />
     <Compile Include="Engine\Physics\RigidBody.cs" />
     <Compile Include="Engine\UpdateMngr.cs" />
-    <Compile Include="FSM\State.cs" />
-    <Compile Include="FSM\StateMachine.cs" />
-    <Compile Include="FSM\WalkState.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Managers\CameraMgr.cs" />
     <Compile Include="RandomGenerator.cs" />

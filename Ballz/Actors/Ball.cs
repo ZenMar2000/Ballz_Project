@@ -78,7 +78,18 @@ namespace Ballz
 
         public override void OnCollide(Collision collisionInfo)
         {
+      
             Vector2 bounce = RigidBody.Position - collisionInfo.Collider.Position;
+
+            if (bounce == Vector2.Zero)
+            {
+                do
+                {
+                    bounce.X = RandomGenerator.GetRandomFloat();
+                    bounce.Y = RandomGenerator.GetRandomFloat();
+                } while (bounce == Vector2.Zero);
+            }
+
             bounce.Normalize();
             bounce *= 0.15f;
 
@@ -107,7 +118,15 @@ namespace Ballz
 
         private void SetRandomDirection()
         {
-            RigidBody.Velocity = new Vector2(RandomGenerator.GetRandomFloat(-1, 1), RandomGenerator.GetRandomFloat(-1, 1));
+            float x;
+            float y;
+            do
+            {
+                x = RandomGenerator.GetRandomFloat(-1, 1);
+                y = RandomGenerator.GetRandomFloat(-1, 1);
+            } while (x == y && x == 0);
+
+            RigidBody.Velocity = new Vector2(x, y);
 
             RigidBody.Velocity.Normalize();
             RigidBody.Velocity *= maxSpeed;
@@ -133,7 +152,7 @@ namespace Ballz
                 InfectFromOthers();
             }
 
-            base.Update();
+            //base.Update();
         }
 
         private void CheckWindowBorders()

@@ -35,12 +35,12 @@ namespace Ballz
 
         public void Update()
         {
-            if (IsGravityAffected)
-            {
-                Velocity.Y += PhysicsMngr.G * Game.DeltaTime;
-            }
+            //if (IsGravityAffected)
+            //{
+            //    Velocity.Y += PhysicsMngr.G * Game.DeltaTime;
+            //}
 
-            ApplyFriction();
+            //ApplyFriction();
 
             GameObject.Position += Velocity * Game.DeltaTime;
         }

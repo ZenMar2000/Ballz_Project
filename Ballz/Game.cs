@@ -81,30 +81,6 @@ namespace Ballz
 
             while (Window.IsOpened)
             {
-                //if (!Ball.IsAlive)
-                //    return;
-
-                //// INPUT
-                //if (Window.GetKey(KeyCode.Esc))
-                //{
-                //    return;
-                //}
-
-                //Ball.Input();
-
-                //// UPDATE
-                //PhysicsMngr.Update();
-                //UpdateMngr.Update();
-                //SpawnMngr.Update();
-                //PowerUpsMngr.Update();
-
-                //// COLLISIONS
-                //PhysicsMngr.CheckCollisions();
-
-                //// DRAW
-                //DrawMngr.Draw();
-                //DebugMngr.Draw();
-
                 // Show FPS on Window Title Bar
                 Window.SetTitle($"FPS: {1f / Window.DeltaTime}");
 

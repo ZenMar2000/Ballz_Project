@@ -45,7 +45,7 @@ namespace Ballz
                     spawn = new Vector2(randX, randY);
                     for (int x = 0; x < spawnPos.Count(); x++)
                     {
-                        if (spawnPos[x] == spawn)
+                        if (spawnPos[x].X == spawn.X && spawnPos[x].Y == spawn.Y)
                         {
                             validPosition = false;
                         }
@@ -80,27 +80,10 @@ namespace Ballz
         protected override void LoadAssets()
         {
             //images
-            //GfxMngr.AddTexture("BG", "Assets/hex_grid_green.png");
-
             GfxMngr.AddTexture("ball", "Assets/grey_ball.png");
-            //GfxMngr.AddTexture("player_2", "Assets/player_2.png");
-            //GfxMngr.AddTexture("enemy_0", "Assets/enemy_0.png");
-            //GfxMngr.AddTexture("enemy_1", "Assets/enemy_1.png");
-
-            //GfxMngr.AddTexture("barFrame", "Assets/loadingBar_frame.png");
-            //GfxMngr.AddTexture("blueBar", "Assets/loadingBar_bar.png");
-
-            //GfxMngr.AddTexture("bullet", "Assets/fireball.png");
-            //GfxMngr.AddTexture("heart", "Assets/heart.png");
-
-            //GfxMngr.AddTexture("tile_crate", "Assets/Levels/crate.png");
-            //GfxMngr.AddTexture("tile_earth", "Assets/Levels/earth.png");
-            //GfxMngr.AddTexture("tile_earthGrass", "Assets/Levels/earthGrass.png");
-            //GfxMngr.AddTexture("tile_stone", "Assets/Levels/stone.png");
 
             //fonts
             //FontMngr.AddFont("stdFont", "Assets/textSheet.png", 15, 32, 20, 20);
-            //FontMngr.AddFont("comics", "Assets/comics.png", 10, 32, 61, 65);
         }
 
         public override void Input()
@@ -110,15 +93,11 @@ namespace Ballz
 
         public override void Update()
         {
-            //if (!myBall.IsAlive)
-            //    IsPlaying = false;
-
             PhysicsMngr.Update();
+
             UpdateMngr.Update();
 
             PhysicsMngr.CheckCollisions();
-
-            //CameraMgr.Update();
         }
 
         public override Scene OnExit()
