@@ -4,18 +4,19 @@ namespace Ballz
 {
     abstract class Actor : GameObject
     {
-
-        //protected int energy;
-        //protected int maxEnergy;
+        public bool IsInfected { get; protected set; }
+        public bool BeginInfection = false;
+        protected float infectionTimer = 0;
+        protected float timeBeforeInfection = 4;
+        protected float infectionRadius = 3;
 
         public bool IsAlive = true;
         //public virtual int Energy { get => energy; set { energy = MathHelper.Clamp(value, 0, maxEnergy); } }
 
-        public Actor(string texturePath, int textOffsetX = 0, int textOffsetY = 0, float spriteWidth = 0, float spriteHeight = 0) : base(texturePath, DrawLayer.Playground, textOffsetX, textOffsetY, spriteWidth, spriteHeight)
+        public Actor(string texturePath, int textOffsetX = 0, int textOffsetY = 0, float spriteWidth = 0, float spriteHeight = 0, bool isInfected = false) : base(texturePath, DrawLayer.Playground, textOffsetX, textOffsetY, spriteWidth, spriteHeight)
         {
             RigidBody = new RigidBody(this);
-
-            //maxEnergy = 100;
+            IsInfected = isInfected;
 
         }
 

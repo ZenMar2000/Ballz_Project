@@ -7,9 +7,7 @@ namespace Ballz
 {
     class PlayScene : Scene
     {
-        protected int maxBalls =100
-            ;
-        //protected GameObject Bg;
+        protected int maxBalls =100;
         public List<Ball> myBalls { get; protected set; }
 
         public float GroundY { get; protected set; }

@@ -1,13 +1,16 @@
 ﻿using OpenTK;
 using System;
+using System.Linq.Expressions;
 
 namespace Ballz
 {
     class Ball : Actor
     {
+
         public Ball() : base("ball")
         {
             IsActive = true;
+            IsInfected = false;
             maxSpeed = 1f;
 
             frameW = frameH;
@@ -61,6 +64,12 @@ namespace Ballz
 
             RigidBody.Velocity.Normalize();
             RigidBody.Velocity *= maxSpeed;
+        }
+
+        public void InfectTheBall()
+        {
+            IsInfected = true;
+            ChangeSpriteColor(new Vector3(1f,0f,0f));
         }
     }
 }
