@@ -85,8 +85,8 @@ namespace Ballz
             {
                 do
                 {
-                    bounce.X = RandomGenerator.GetRandomFloat();
-                    bounce.Y = RandomGenerator.GetRandomFloat();
+                    bounce.X = RandomGenerator.GetRandomFloat(-1,1);
+                    bounce.Y = RandomGenerator.GetRandomFloat(-1,1);
                 } while (bounce == Vector2.Zero);
             }
 
