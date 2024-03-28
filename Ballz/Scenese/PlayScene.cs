@@ -81,6 +81,8 @@ namespace Ballz
         {
             //images
             GfxMngr.AddTexture("ball", "Assets/grey_ball.png");
+            GfxMngr.AddTexture("backgroundBall", "Assets/background_ball.png");
+            GfxMngr.AddTexture("circle", "Assets/circle.png");
 
             //fonts
             //FontMngr.AddFont("stdFont", "Assets/textSheet.png", 15, 32, 20, 20);

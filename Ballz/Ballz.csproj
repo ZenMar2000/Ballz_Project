@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\Ball.cs" />
+    <Compile Include="Actors\CircleEffect.cs" />
+    <Compile Include="Actors\InfectionCircle.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\KeyboardController.cs" />
     <Compile Include="Engine\Collision.cs" />
@@ -87,6 +89,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Assets\background_ball.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\circle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

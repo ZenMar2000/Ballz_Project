@@ -15,6 +15,7 @@ namespace Ballz
             }
             private set
             {
+                effect.Enable(value);
                 _beginInfection = value;
                 if (value == true)
                 {
@@ -23,7 +24,6 @@ namespace Ballz
                 else
                 {
                     ChangeSpriteColor(new Vector3(0, 1, 0));
-
                 }
             }
         }
@@ -45,11 +45,17 @@ namespace Ballz
         }
 
         protected float infectionTimer = 0;
-        protected float timeBeforeInfection = 4;
-        protected float infectionRadius = 2;
+        public float TimeBeforeInfection { get; private set; }
+        public float InfectionRadius { get; private set; }
 
+        CircleEffect effect;
+        InfectionCircle circle;
         public Ball(bool isInfected = false) : base("ball")
         {
+            TimeBeforeInfection = 4;
+            InfectionRadius = 2;
+            effect = new CircleEffect(this);
+            circle = new InfectionCircle(this);
             IsActive = true;
             if (isInfected)
             {
@@ -78,15 +84,15 @@ namespace Ballz
 
         public override void OnCollide(Collision collisionInfo)
         {
-      
+
             Vector2 bounce = RigidBody.Position - collisionInfo.Collider.Position;
 
             if (bounce == Vector2.Zero)
             {
                 do
                 {
-                    bounce.X = RandomGenerator.GetRandomFloat(-1,1);
-                    bounce.Y = RandomGenerator.GetRandomFloat(-1,1);
+                    bounce.X = RandomGenerator.GetRandomFloat(-1, 1);
+                    bounce.Y = RandomGenerator.GetRandomFloat(-1, 1);
                 } while (bounce == Vector2.Zero);
             }
 
@@ -137,6 +143,7 @@ namespace Ballz
             infectionTimer = 0;
             BeginInfected = false;
             ChangeSpriteColor(new Vector3(1f, 0f, 0f));
+            circle.Enable(true);
         }
 
         public override void Update()
@@ -152,7 +159,6 @@ namespace Ballz
                 InfectFromOthers();
             }
 
-            //base.Update();
         }
 
         private void CheckWindowBorders()
@@ -190,11 +196,10 @@ namespace Ballz
             foreach (Ball ball in balls)
             {
                 Vector2 dist = ball.Position - Position;
-                if (ball != this && dist.LengthSquared < infectionRadius)
+                if (ball != this && dist.LengthSquared < InfectionRadius)
                 {
                     if (ball.IsInfected)
                     {
-
                         infectionTimer += Game.DeltaTime;
                         infectionStatus = true;
                         break;
@@ -205,9 +210,13 @@ namespace Ballz
             if (infectionStatus != BeginInfected)
             {
                 BeginInfected = infectionStatus;
+                if (!BeginInfected)
+                {
+                    infectionTimer = 0;
+                }
             }
 
-            if (infectionTimer >= timeBeforeInfection)
+            if (infectionTimer >= TimeBeforeInfection)
             {
                 IsInfected = true;
             }
