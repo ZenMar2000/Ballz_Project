@@ -190,16 +190,17 @@ namespace Ballz
 
         private void InfectFromOthers()
         {
-            List<Ball> balls = ((PlayScene)Game.CurrentScene).myBalls;
+            List<Ball> deezNuts = ((PlayScene)Game.CurrentScene).mahBalls;
             bool infectionStatus = false;
 
-            foreach (Ball ball in balls)
+            foreach (Ball bollock in deezNuts)
             {
-                Vector2 dist = ball.Position - Position;
-                if (ball != this && dist.LengthSquared < InfectionRadius)
+                Vector2 dist = bollock.Position - Position;
+                if (bollock != this && dist.LengthSquared < InfectionRadius)
                 {
-                    if (ball.IsInfected)
-                    {
+                    if (bollock.IsInfected)
+                    {   
+                        //Yo that look serious. Maybe ask a doctor?
                         infectionTimer += Game.DeltaTime;
                         infectionStatus = true;
                         break;

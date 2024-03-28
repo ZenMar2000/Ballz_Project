@@ -9,7 +9,7 @@ namespace Ballz
     class PlayScene : Scene
     {
         protected int maxBalls =100;
-        public List<Ball> myBalls { get; protected set; }
+        public List<Ball> mahBalls { get; protected set; }
 
         public float GroundY { get; protected set; }
 
@@ -21,7 +21,7 @@ namespace Ballz
         public override void Start()
         {
             LoadAssets();
-            myBalls = new List<Ball>();
+            mahBalls = new List<Ball>();
             List<Vector2> spawnPos = new List<Vector2>();
 
             CameraLimits cameraLimits = new CameraLimits(Game.Window.OrthoWidth * 0.8f, Game.Window.OrthoWidth * 0.5f, Game.Window.OrthoHeight * 0.5f, 0);
@@ -63,8 +63,8 @@ namespace Ballz
                 if (validPosition)
                 {
                     //Console.WriteLine(spawn);
-                    myBalls.Add(new Ball(i == maxBalls-1));
-                    myBalls.Last().Position = spawn;
+                    mahBalls.Add(new Ball(i == maxBalls-1));
+                    mahBalls.Last().Position = spawn;
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace Ballz
 
         public override Scene OnExit()
         {
-            myBalls = null;
+            mahBalls = null;
             //Bg = null;
 
             //BulletMngr.ClearAll();

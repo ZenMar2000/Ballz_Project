@@ -1,0 +1,20 @@
+Mandatory:
+- Balls bounce off window borders
+- Red ball can infect other balls by begin nearby
+- While begin infected, balls turn yellow. If they escape, return green
+
+Bonus:
+- Balls collide on each other
+
+Extra:
+- Improved collisions, now more realistic
+- Red balls have circle around them, showing the infection area
+- Yellow balls display a shrinking circle, graphically showing how much time they have before turning red
+- (ToDo) Audio on bounces
+- (ToDo) Audio on infection
+- (ToDo) R key to restart
+- (ToDo) Click to spawn new ball (left for green, right for red)
+- (ToDo) Space key to clear all balls in the area
+- (ToDo) Audio on spawn by mouse clicks
+- (ToDo) G key to activate Red chase mode (slowly turn toward closest green ball)
+- Added dumb jokes about balls somewhere in the code

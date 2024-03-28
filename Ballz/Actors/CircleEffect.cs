@@ -9,11 +9,13 @@ namespace Ballz
         public CircleEffect(Ball parent) : base("backgroundBall")
         {
             this.parent = parent;
-            scale = (float)parent.TimeBeforeInfection * 0.5f + 1;
             IsActive = false;
-            sprite.scale = new Vector2(scale, scale);
             frameW = frameH;
+
             Layer = DrawLayer.Middleground;
+
+            ResetScale();
+
             UpdateMngr.AddItem(this);
             DrawMngr.AddItem(this);
         }
@@ -33,9 +35,14 @@ namespace Ballz
             IsActive = enabled;
             if (enabled == false)
             {
-                scale = (float)parent.TimeBeforeInfection * 0.5f + 1;
-                sprite.scale = new Vector2(scale, scale);
+                ResetScale();
             }
+        }
+
+        private void ResetScale()
+        {
+            scale = (float)parent.TimeBeforeInfection * 0.5f + 1;
+            sprite.scale = new Vector2(scale, scale);
         }
     }
 }
