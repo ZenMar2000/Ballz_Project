@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Ballz
 {
@@ -39,6 +40,8 @@ namespace Ballz
                     int randX = RandomGenerator.GetRandomInt(0, (int)Game.Window.OrthoWidth);
                     int randY = RandomGenerator.GetRandomInt(0, (int)Game.Window.OrthoHeight);
 
+                    //int randX = i + 1;
+                    //int randY = 2;
                     spawn = new Vector2(randX, randY);
                     for (int x = 0; x < spawnPos.Count(); x++)
                     {
@@ -59,7 +62,8 @@ namespace Ballz
 
                 if (validPosition)
                 {
-                    myBalls.Add(new Ball());
+                    //Console.WriteLine(spawn);
+                    myBalls.Add(new Ball(i == maxBalls-1));
                     myBalls.Last().Position = spawn;
                 }
                 else
@@ -69,8 +73,7 @@ namespace Ballz
                 }
             }
 
-
-
+            Thread.Sleep(1000);
             base.Start();
         }
 
