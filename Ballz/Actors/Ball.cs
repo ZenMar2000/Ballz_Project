@@ -24,21 +24,10 @@ namespace Ballz
 
             UpdateMngr.AddItem(this);
             DrawMngr.AddItem(this);
-
-            //fast 2D use radiants and the positive rotation is clockwise
-            //sprite.Rotation = -MathHelper.PiOver2; 
         }
 
         public override void OnCollide(Collision collisionInfo)
         {
-            //Workin
-            //Vector2 myDir = RigidBody.Position  - collisionInfo.Collider.Position;
-            //myDir.Normalize();
-
-            //collisionInfo.Collider.RigidBody.Velocity = myDir * -1;
-            //RigidBody.Velocity = myDir * maxSpeed;
-
-
             Vector2 bounce = RigidBody.Position - collisionInfo.Collider.Position;
             bounce.Normalize();
             bounce *= 0.15f;
