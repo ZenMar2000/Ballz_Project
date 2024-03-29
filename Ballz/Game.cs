@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Aiv.Audio;
 using Aiv.Fast2D;
 using OpenTK;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Ballz
 {
     static class Game
     {
+        public static AudioDevice PlayerEar = new AudioDevice();
+        public static AudioSource Source = new AudioSource();
         // Variables
         public static Window Window;
         //public static Background Bg;

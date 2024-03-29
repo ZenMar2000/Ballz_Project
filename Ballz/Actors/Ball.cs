@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Aiv.Audio;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 
@@ -6,17 +7,20 @@ namespace Ballz
 {
     class Ball : Actor
     {
-        private bool _beginInfection = false;
-        public bool BeginInfected
+        private AudioClip popClip = GfxMngr.GetClip("pop");
+        private AudioClip thokClip= GfxMngr.GetClip("thok");
+        private AudioClip clokClip= GfxMngr.GetClip("clok");
+        private bool _beingInfected = false;
+        public bool BeingInfected
         {
             get
             {
-                return _beginInfection;
+                return _beingInfected;
             }
             private set
             {
                 effect.Enable(value);
-                _beginInfection = value;
+                _beingInfected = value;
                 if (value == true)
                 {
                     ChangeSpriteColor(new Vector3(1, 1, 0));
@@ -84,7 +88,6 @@ namespace Ballz
 
         public override void OnCollide(Collision collisionInfo)
         {
-
             Vector2 bounce = RigidBody.Position - collisionInfo.Collider.Position;
 
             if (bounce == Vector2.Zero)
@@ -94,6 +97,16 @@ namespace Ballz
                     bounce.X = RandomGenerator.GetRandomFloat(-1, 1);
                     bounce.Y = RandomGenerator.GetRandomFloat(-1, 1);
                 } while (bounce == Vector2.Zero);
+            }
+            else if(soundTimer <= 0)
+            {
+                Game.Source.Pitch = RandomGenerator.GetRandomInt(8,14) * 0.1f;
+                Game.Source.Play(thokClip);
+                collisionInfo.Collider.soundTimer = 0.75f;
+            }
+            else
+            {
+                soundTimer = 0.75f;
             }
 
             bounce.Normalize();
@@ -141,9 +154,12 @@ namespace Ballz
         public void InfectTheBall()
         {
             infectionTimer = 0;
-            BeginInfected = false;
+            BeingInfected = false;
             ChangeSpriteColor(new Vector3(1f, 0f, 0f));
             circle.Enable(true);
+
+            Game.Source.Pitch = RandomGenerator.GetRandomInt(8, 12) * 0.1f;
+            Game.Source.Play(popClip);
         }
 
         public override void Update()
@@ -159,20 +175,29 @@ namespace Ballz
                 InfectFromOthers();
             }
 
+            if(soundTimer >= 0)
+            {
+                soundTimer -= Game.DeltaTime;
+            }
+
         }
 
         private void CheckWindowBorders()
         {
+            bool playSound = false;
             //X Border
             if (Position.X + sprite.Width * 0.5f > Game.Window.OrthoWidth)
             {
                 RigidBody.Velocity.X *= -1;
                 X = Game.Window.OrthoWidth - sprite.Width * 0.5f;
+
+                playSound = true;
             }
             else if (Position.X - sprite.Width * 0.5f <= 0)
             {
                 RigidBody.Velocity.X *= -1;
                 X = sprite.Width * 0.5f;
+                playSound = true;
             }
 
             //Y border
@@ -180,11 +205,19 @@ namespace Ballz
             {
                 RigidBody.Velocity.Y *= -1;
                 Y = Game.Window.OrthoHeight - sprite.Height * 0.5f;
+                playSound = true;
             }
             else if (Position.Y - sprite.Height * 0.5f <= 0)
             {
                 RigidBody.Velocity.Y *= -1;
                 Y = sprite.Height * 0.5f;
+                playSound = true;
+            }
+
+            if (playSound)
+            {
+                Game.Source.Pitch = RandomGenerator.GetRandomInt(4, 7) * 0.1f;
+                Game.Source.Play(thokClip);
             }
         }
 
@@ -208,10 +241,10 @@ namespace Ballz
                 }
             }
 
-            if (infectionStatus != BeginInfected)
+            if (infectionStatus != BeingInfected)
             {
-                BeginInfected = infectionStatus;
-                if (!BeginInfected)
+                BeingInfected = infectionStatus;
+                if (!BeingInfected)
                 {
                     infectionTimer = 0;
                 }

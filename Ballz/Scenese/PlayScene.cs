@@ -8,7 +8,7 @@ namespace Ballz
 {
     class PlayScene : Scene
     {
-        protected int maxBalls =100;
+        protected int maxBalls =25;
         public List<Ball> mahBalls { get; protected set; }
 
         public float GroundY { get; protected set; }
@@ -83,6 +83,11 @@ namespace Ballz
             GfxMngr.AddTexture("ball", "Assets/grey_ball.png");
             GfxMngr.AddTexture("backgroundBall", "Assets/background_ball.png");
             GfxMngr.AddTexture("circle", "Assets/circle.png");
+
+            //audio 
+            GfxMngr.AddClip("clok", "Assets/Audio/clok_edited.wav");
+            GfxMngr.AddClip("thok", "Assets/Audio/thok_edited.wav");
+            GfxMngr.AddClip("pop", "Assets/Audio/pop_edited.wav");
 
             //fonts
             //FontMngr.AddFont("stdFont", "Assets/textSheet.png", 15, 32, 20, 20);

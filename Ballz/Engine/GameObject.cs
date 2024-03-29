@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aiv.Audio;
 using Aiv.Fast2D;
 using OpenTK;
 
@@ -10,6 +11,8 @@ namespace Ballz
 {
     class GameObject : I_Updatable, I_Drawable
     {
+        public double soundTimer = 0;
+
         protected Sprite sprite;
         protected Texture texture;
 

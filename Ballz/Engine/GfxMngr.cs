@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Aiv.Fast2D;
-//using Aiv.Audio;
+using Aiv.Audio;
 
 namespace Ballz
 {
     static class GfxMngr
     {
         private static Dictionary<string, Texture> textures;
-        //private static Dictionary<string, AudioClip> clips;
+        private static Dictionary<string, AudioClip> clips;
 
         static GfxMngr()
         {
             textures = new Dictionary<string, Texture>();
-            //clips = new Dictionary<string, AudioClip>();
+            clips = new Dictionary<string, AudioClip>();
         }
 
         public static Texture AddTexture(string name, string path)
@@ -31,17 +31,17 @@ namespace Ballz
             return t;
         }
 
-        //public static AudioClip AddClip(string name, string path)
-        //{
-        //    AudioClip c = new AudioClip(path);
+        public static AudioClip AddClip(string name, string path)
+        {
+            AudioClip c = new AudioClip(path);
 
-        //    if (c != null)
-        //    {
-        //        clips[name] = c;
-        //    }
+            if (c != null)
+            {
+                clips[name] = c;
+            }
 
-        //    return c;
-        //}
+            return c;
+        }
 
         public static Texture GetTexture(string name)
         {
@@ -55,22 +55,22 @@ namespace Ballz
             return t;
         }
 
-        //public static AudioClip GetClip(String name)
-        //{
-        //    AudioClip c = null;
+        public static AudioClip GetClip(String name)
+        {
+            AudioClip c = null;
 
-        //    if (clips.ContainsKey(name))
-        //    {
-        //        c = clips[name];
-        //    }
+            if (clips.ContainsKey(name))
+            {
+                c = clips[name];
+            }
 
-        //    return c;
-        //}
+            return c;
+        }
 
         public static void ClearAll()
         {
             textures.Clear();
-            //clips.Clear();
+            clips.Clear();
         }
     }
 }
