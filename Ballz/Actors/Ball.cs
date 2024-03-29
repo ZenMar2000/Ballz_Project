@@ -9,7 +9,6 @@ namespace Ballz
     {
         private AudioClip popClip = GfxMngr.GetClip("pop");
         private AudioClip thokClip= GfxMngr.GetClip("thok");
-        private AudioClip clokClip= GfxMngr.GetClip("clok");
         private bool _beingInfected = false;
         public bool BeingInfected
         {

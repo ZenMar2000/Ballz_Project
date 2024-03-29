@@ -13,7 +13,7 @@ namespace Ballz
         //public static Background Bg;
         //public static Ball Ball;
 
-        //private static KeyboardController keyboardCtrl;
+        private static KeyboardController keyboardCtrl;
         //private static List<Controller> controllers;
 
         // Properties
@@ -27,7 +27,6 @@ namespace Ballz
 
         public static float HalfDiagonalSquared { get { return ScreenCenter.LengthSquared; } }
 
-
         public static void Init()
         {
             Window = new Window(1280, 720, "Heads");
@@ -39,9 +38,13 @@ namespace Ballz
 
             ScreenCenter = new Vector2(Window.OrthoWidth * 0.5f, Window.OrthoHeight * 0.5f);
 
+            // CONTROLLERS
+            // Always create a keyboard controller (init at 0 cause we only have 1 keyboard)
+            keyboardCtrl = new KeyboardController(0);
+
             // SCENES
             //TitleScene titleScene = new TitleScene("titleScreen");
-            PlayScene playScene = new PlayScene();
+            PlayScene playScene = new PlayScene(keyboardCtrl);
             //GameOverScene gameOverScene = new GameOverScene();
 
             //titleScene.NextScene = playScene;
@@ -50,22 +53,7 @@ namespace Ballz
 
             CurrentScene = playScene;
 
-            // CONTROLLERS
-            // Always create a keyboard controller (init at 0 cause we only have 1 keyboard)
-            //keyboardCtrl = new KeyboardController(0);
         }
-
-        //public static Controller GetController(int index)
-        //{
-        //    Controller ctrl = keyboardCtrl;
-
-        //    if (index < controllers.Count)
-        //    {
-        //        ctrl = controllers[index];
-        //    }
-
-        //    return ctrl;
-        //}
 
         public static float PixelsToUnits(float pixelsSize)
         {

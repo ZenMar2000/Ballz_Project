@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Aiv.Audio;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,32 @@ namespace Ballz
 {
     class PlayScene : Scene
     {
-        protected int maxBalls =25;
+        protected int maxBalls = 25;//25
+
+        private AudioClip clokClip;
+
+        protected bool clickedL = false;
+        protected bool clickedR = false;
+
+        protected KeyboardController keyboardCtrl;
+
         public List<Ball> mahBalls { get; protected set; }
 
         public float GroundY { get; protected set; }
 
-        public PlayScene() : base()
+        public PlayScene(KeyboardController ctrl) : base()
         {
+            keyboardCtrl = ctrl;
 
         }
 
         public override void Start()
         {
-            LoadAssets();
+
+        LoadAssets();
             mahBalls = new List<Ball>();
             List<Vector2> spawnPos = new List<Vector2>();
+
 
             CameraLimits cameraLimits = new CameraLimits(Game.Window.OrthoWidth * 0.8f, Game.Window.OrthoWidth * 0.5f, Game.Window.OrthoHeight * 0.5f, 0);
             CameraMgr.Init(null, cameraLimits);
@@ -63,7 +75,7 @@ namespace Ballz
                 if (validPosition)
                 {
                     //Console.WriteLine(spawn);
-                    mahBalls.Add(new Ball(i == maxBalls-1));
+                    mahBalls.Add(new Ball(i == maxBalls - 1));
                     mahBalls.Last().Position = spawn;
                 }
                 else
@@ -89,13 +101,15 @@ namespace Ballz
             GfxMngr.AddClip("thok", "Assets/Audio/thok_edited.wav");
             GfxMngr.AddClip("pop", "Assets/Audio/pop_edited.wav");
 
+            clokClip = GfxMngr.GetClip("clok");
+
             //fonts
             //FontMngr.AddFont("stdFont", "Assets/textSheet.png", 15, 32, 20, 20);
         }
 
         public override void Input()
         {
-            //Optional input
+            HandleInput();
         }
 
         public override void Update()
@@ -131,6 +145,66 @@ namespace Ballz
             DrawMngr.Draw();
 
             //DebugMngr.Draw();
+        }
+
+        private void HandleInput()
+        {
+            if (keyboardCtrl.IsRestartKeyPressed())
+            {
+                Game.CurrentScene.OnExit();
+                Game.CurrentScene.Start();
+            }
+
+            if (keyboardCtrl.IsClearWindowKeyPressed())
+            {
+                UpdateMngr.ClearAll();
+                PhysicsMngr.ClearAll();
+                DrawMngr.ClearAll();
+                GfxMngr.ClearAll();
+                FontMngr.ClearAll();
+
+                mahBalls = new List<Ball>();
+            }
+
+            if (Game.Window.MouseLeft)
+            {
+                if (!clickedL)
+                {
+                    clickedL = true;
+                    float x = Game.Window.MouseX;
+                    float y = Game.Window.MouseY;
+
+                    mahBalls.Add(new Ball(false));
+                    mahBalls.Last().Position = new Vector2(x, y);
+
+                    Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
+                    Game.Source.Play(clokClip);
+                }
+            }
+            else if (clickedL)
+            {
+                clickedL = false;
+            }
+
+
+            if (Game.Window.MouseRight)
+            {
+                if (!clickedR)
+                {
+                    clickedR = true;
+                    float x = Game.Window.MouseX;
+                    float y = Game.Window.MouseY;
+
+                    mahBalls.Add(new Ball(true));
+                    mahBalls.Last().Position = new Vector2(x, y);
+                    Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
+                    Game.Source.Play(clokClip);
+                }
+            }
+            else if (clickedR)
+            {
+                clickedR = false;
+            }
         }
     }
 }
