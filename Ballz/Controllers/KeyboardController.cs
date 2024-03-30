@@ -70,9 +70,22 @@ namespace Ballz
 
         public override bool SpawnRedBallKeyPressed()
         {
-          
             return false;
+        }
 
+        public bool RedBoost()
+        {
+            return Game.Window.GetKey(KeyCode.G);
+        }
+
+        public bool GreenBoost()
+        {
+            return Game.Window.GetKey(KeyCode.F);
+        }
+
+        public bool RedChaseMode()
+        {
+            return Game.Window.GetKey(KeyCode.T);
         }
 
     }

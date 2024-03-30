@@ -7,9 +7,14 @@ namespace Ballz
 {
     class Ball : Actor
     {
+        private double turnTimer = 0;
         private AudioClip popClip = GfxMngr.GetClip("pop");
-        private AudioClip thokClip= GfxMngr.GetClip("thok");
+        private AudioClip thokClip = GfxMngr.GetClip("thok");
         private bool _beingInfected = false;
+        private double turnRatio = 0.001f;
+
+        protected float infectionTimer = 0;
+
         public bool BeingInfected
         {
             get
@@ -47,7 +52,6 @@ namespace Ballz
             }
         }
 
-        protected float infectionTimer = 0;
         public float TimeBeforeInfection { get; private set; }
         public float InfectionRadius { get; private set; }
 
@@ -97,9 +101,9 @@ namespace Ballz
                     bounce.Y = RandomGenerator.GetRandomFloat(-1, 1);
                 } while (bounce == Vector2.Zero);
             }
-            else if(soundTimer <= 0)
+            else if (soundTimer <= 0)
             {
-                Game.Source.Pitch = RandomGenerator.GetRandomInt(8,14) * 0.1f;
+                Game.Source.Pitch = RandomGenerator.GetRandomInt(8, 14) * 0.1f;
                 Game.Source.Play(thokClip);
                 collisionInfo.Collider.soundTimer = 0.75f;
             }
@@ -174,11 +178,15 @@ namespace Ballz
                 InfectFromOthers();
             }
 
-            if(soundTimer >= 0)
+            if (((PlayScene)Game.CurrentScene).RedChase == true && IsInfected)
+            {
+                ChaseLogic();
+            }
+
+            if (soundTimer >= 0)
             {
                 soundTimer -= Game.DeltaTime;
             }
-
         }
 
         private void CheckWindowBorders()
@@ -231,7 +239,7 @@ namespace Ballz
                 if (bollock != this && dist.LengthSquared < InfectionRadius)
                 {
                     if (bollock.IsInfected)
-                    {   
+                    {
                         //Yo that look serious. Maybe ask a doctor?
                         infectionTimer += Game.DeltaTime;
                         infectionStatus = true;
@@ -253,6 +261,88 @@ namespace Ballz
             {
                 IsInfected = true;
             }
+        }
+
+        private void ChaseLogic()
+        {
+            Ball chaseThis = null;
+            List<Ball> ballz = ((PlayScene)Game.CurrentScene).mahBalls;
+            double minDist = (ballz[0].Position - Position).Length;
+
+            for (int i = 1; i < ballz.Count; i++)
+            {
+                double distCheck = (ballz[i].Position - Position).LengthSquared;
+                if (distCheck < minDist && !ballz[i].IsInfected)
+                {
+                    if (distCheck <= InfectionRadius)
+                    {
+                        minDist = distCheck;
+                        chaseThis = ballz[i];
+                    }
+                }
+            }
+
+            if (chaseThis != null)
+            {
+                RotateTowards(chaseThis.Position);
+            }
+        }
+
+        public void RotateTowards(Vector2 target)
+        {
+            // Get the angle between the current vector and the target vector
+            if (turnTimer <= 0)
+            {
+                //turnTimer = 0.5;
+                Vector2 newDir;
+                double newAngle;
+
+                Vector2 currentNormalizedDir = RigidBody.Velocity.Normalized();
+                Vector2 targetDir = target - Position;
+                if (targetDir.X == float.NaN)
+                {
+                    return;
+                }
+                targetDir.Normalize();
+                targetDir *= maxSpeed;
+
+                newDir = Vector2.Lerp(RigidBody.Velocity, targetDir, 0.0075f);
+
+                RigidBody.Velocity = newDir.Normalized() * maxSpeed;
+                //double currentAngle = Math.Acos(currentNormalizedDir.X) * 180 / 3.14;
+                //newAngle = currentAngle;
+                //double targetAngle = Math.Acos(targetDir.X) * 180 / 3.14;
+
+                //if (currentAngle > 180)
+                //    currentAngle -= 360;
+
+                //if (targetAngle > 180)
+                //    targetAngle -= 360;
+
+                //if (currentAngle < targetAngle - 5)
+                //{
+                //    newAngle -= turnRatio;
+                //    newDir = new Vector2((float)Math.Cos(newAngle), (float)Math.Sin(newAngle));
+                //    RigidBody.Velocity = newDir;
+
+                //}
+                //else if (currentAngle > targetAngle + 5)
+                //{
+                //    newAngle += turnRatio;
+                //    newDir = new Vector2((float)Math.Cos(newAngle), (float)Math.Sin(newAngle));
+                //    RigidBody.Velocity = newDir;
+
+                //}
+            }
+            else
+            {
+                turnTimer -= Game.DeltaTime;
+            }
+
+
+            // Magie strane della matematica
+
+
         }
     }
 }

@@ -15,8 +15,10 @@ Extra:
 - Audio on bounces on walls
 - Audio on infection
 - Space key to clear all balls in the window
+- R key to restart
+- Click to spawn new ball (left for green, right for red)
+- Audio on spawn by mouse clicks
+- G key boost speed temporarily for red balls
+- F key boost speed temporarily for green balls
+- T key to enable Red Chase Mode
 - Added dumb jokes about balls in the code
-- (ToDo) R key to restart
-- (ToDo) Click to spawn new ball (left for green, right for red)
-- (ToDo) Audio on spawn by mouse clicks
-- (ToDo) G key to activate Red chase mode (slowly turn toward closest green ball)

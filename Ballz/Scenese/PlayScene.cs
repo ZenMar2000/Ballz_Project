@@ -3,7 +3,6 @@ using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Ballz
 {
@@ -12,9 +11,14 @@ namespace Ballz
         protected int maxBalls = 25;//25
 
         private AudioClip clokClip;
+        public bool RedChase = false;
 
         protected bool clickedL = false;
         protected bool clickedR = false;
+        protected bool pressedG = false;
+        protected bool pressedT = false;
+        protected bool pressedF = false;
+        protected bool pressedSpace = false;
 
         protected KeyboardController keyboardCtrl;
 
@@ -31,7 +35,7 @@ namespace Ballz
         public override void Start()
         {
 
-        LoadAssets();
+            LoadAssets();
             mahBalls = new List<Ball>();
             List<Vector2> spawnPos = new List<Vector2>();
 
@@ -85,7 +89,6 @@ namespace Ballz
                 }
             }
 
-            Thread.Sleep(1000);
             base.Start();
         }
 
@@ -153,19 +156,82 @@ namespace Ballz
             {
                 Game.CurrentScene.OnExit();
                 Game.CurrentScene.Start();
+                Console.WriteLine("Restarted");
             }
 
             if (keyboardCtrl.IsClearWindowKeyPressed())
             {
-                UpdateMngr.ClearAll();
-                PhysicsMngr.ClearAll();
-                DrawMngr.ClearAll();
-                GfxMngr.ClearAll();
-                FontMngr.ClearAll();
+                if (!pressedSpace)
+                {
+                    pressedSpace = true;
+                    UpdateMngr.ClearAll();
+                    PhysicsMngr.ClearAll();
+                    DrawMngr.ClearAll();
+                    GfxMngr.ClearAll();
+                    FontMngr.ClearAll();
 
-                mahBalls = new List<Ball>();
+                    mahBalls = new List<Ball>();
+                    Console.WriteLine("Window cleared");
+                }
+            }
+            else if (pressedSpace)
+            {
+                pressedSpace = false;
             }
 
+            if (keyboardCtrl.RedBoost())
+            {
+                if (!pressedG)
+                {
+                    pressedG = true;
+                    foreach (Ball ball in mahBalls)
+                    {
+                        if (ball.IsInfected)
+                        {
+                            ball.RigidBody.Velocity *= 5;
+                        }
+                    }
+                    Console.WriteLine("Red boost");
+                }
+            }
+            else if (pressedG)
+            {
+                pressedG = false;
+            }
+
+            if (keyboardCtrl.GreenBoost())
+            {
+                if (!pressedF)
+                {
+                    pressedF = true;
+                    foreach (Ball ball in mahBalls)
+                    {
+                        if (!ball.IsInfected)
+                        {
+                            ball.RigidBody.Velocity *= 5;
+                        }
+                    }
+                    Console.WriteLine("Green boost");
+                }
+            }
+            else if (pressedF)
+            {
+                pressedF = false;
+            }
+
+            if (keyboardCtrl.RedChaseMode())
+            {
+                if (!pressedT)
+                {
+                    pressedT = true;
+                    RedChase = !RedChase;
+                    Console.WriteLine("Red Chase mode: " + RedChase);
+                }
+            }
+            else if (pressedT)
+            {
+                pressedT = false;
+            }
             if (Game.Window.MouseLeft)
             {
                 if (!clickedL)
@@ -179,6 +245,8 @@ namespace Ballz
 
                     Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
                     Game.Source.Play(clokClip);
+                    Console.WriteLine("Spawned green ball");
+
                 }
             }
             else if (clickedL)
@@ -199,6 +267,8 @@ namespace Ballz
                     mahBalls.Last().Position = new Vector2(x, y);
                     Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
                     Game.Source.Play(clokClip);
+                    Console.WriteLine("Spawned red ball");
+
                 }
             }
             else if (clickedR)
