@@ -267,21 +267,30 @@ namespace Ballz
         {
             Ball chaseThis = null;
             List<Ball> ballz = ((PlayScene)Game.CurrentScene).mahBalls;
-            double minDist = (ballz[0].Position - Position).Length;
+            List<FuzzyLogic> fuzzyLogic = new List<FuzzyLogic>();
 
             for (int i = 1; i < ballz.Count; i++)
             {
                 double distCheck = (ballz[i].Position - Position).LengthSquared;
-                if (distCheck < minDist && !ballz[i].IsInfected)
+                if (distCheck <= InfectionRadius && !ballz[i].IsInfected)
                 {
-                    if (distCheck <= InfectionRadius)
-                    {
-                        minDist = distCheck;
-                        chaseThis = ballz[i];
-                    }
+                    fuzzyLogic.Add(new FuzzyLogic(this, ballz[i], i));
                 }
             }
 
+            if (fuzzyLogic.Count > 0)
+            {
+                chaseThis = ballz[fuzzyLogic[0].index];
+                double maxValue = fuzzyLogic[0].result;
+                for (int i = 1; i < fuzzyLogic.Count; i++)
+                {
+                    if (fuzzyLogic[i].result < maxValue)
+                    {
+                        maxValue = fuzzyLogic[i].result;
+                        chaseThis = ballz[fuzzyLogic[i].index];
+                    }
+                }
+            }
             if (chaseThis != null)
             {
                 RotateTowards(chaseThis.Position);
@@ -341,5 +350,40 @@ namespace Ballz
 
 
         }
+
+        public float GetInfectionTimer()
+        {
+            return infectionTimer;
+        }
+    }
+
+    struct FuzzyLogic
+    {
+        private double distanceFL;
+        private double infectionTimerFL;
+        private double directionAffinityFL;
+
+        public int index;
+        public double result;
+        public FuzzyLogic(Ball currentBall, Ball targetBall, int index)
+        {
+            Vector2 dist = targetBall.Position - currentBall.Position;
+
+            distanceFL = 1-(dist.LengthSquared / currentBall.InfectionRadius);
+            infectionTimerFL = targetBall.GetInfectionTimer();
+            directionAffinityFL = (Math.Cos(currentBall.RigidBody.Velocity.X) - Math.Cos(targetBall.RigidBody.Velocity.X)) - 1;
+
+            result = distanceFL + infectionTimerFL + directionAffinityFL;
+            this.index = index;
+        }
+
+        //public FuzzyLogic(double distance, double infectionTimer, double directionAffinity)
+        //{
+        //    distanceFL = distance;
+        //    infectionTimerFL = infectionTimer;
+        //    directionAffinityFL = directionAffinity;
+
+        //    result = distanceFL + infectionTimerFL + directionAffinityFL;
+        //}
     }
 }
