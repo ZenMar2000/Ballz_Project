@@ -157,6 +157,8 @@ namespace Ballz
                 Game.CurrentScene.OnExit();
                 Game.CurrentScene.Start();
                 Console.WriteLine("Restarted");
+                Console.Clear();
+
             }
 
             if (keyboardCtrl.IsClearWindowKeyPressed())
@@ -170,6 +172,7 @@ namespace Ballz
 
                     mahBalls = new List<Ball>();
                     Console.WriteLine("Window cleared");
+                    Console.Clear();
                 }
             }
             else if (pressedSpace)
