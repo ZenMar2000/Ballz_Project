@@ -167,8 +167,6 @@ namespace Ballz
                     UpdateMngr.ClearAll();
                     PhysicsMngr.ClearAll();
                     DrawMngr.ClearAll();
-                    GfxMngr.ClearAll();
-                    FontMngr.ClearAll();
 
                     mahBalls = new List<Ball>();
                     Console.WriteLine("Window cleared");

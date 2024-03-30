@@ -11,7 +11,7 @@ namespace Ballz
         private AudioClip popClip = GfxMngr.GetClip("pop");
         private AudioClip thokClip = GfxMngr.GetClip("thok");
         private bool _beingInfected = false;
-        private double turnRatio = 0.001f;
+        private float turnRatio = 0.0075f;
 
         protected float infectionTimer = 0;
 
@@ -161,7 +161,7 @@ namespace Ballz
             ChangeSpriteColor(new Vector3(1f, 0f, 0f));
             circle.Enable(true);
 
-            Game.Source.Pitch = RandomGenerator.GetRandomInt(8, 12) * 0.1f;
+            Game.Source.Pitch = RandomGenerator.GetRandomInt(9, 12) * 0.1f;
             Game.Source.Play(popClip);
         }
 
@@ -293,10 +293,7 @@ namespace Ballz
             // Get the angle between the current vector and the target vector
             if (turnTimer <= 0)
             {
-                //turnTimer = 0.5;
                 Vector2 newDir;
-                double newAngle;
-
                 Vector2 currentNormalizedDir = RigidBody.Velocity.Normalized();
                 Vector2 targetDir = target - Position;
                 if (targetDir.X == float.NaN)
@@ -306,7 +303,7 @@ namespace Ballz
                 targetDir.Normalize();
                 targetDir *= maxSpeed;
 
-                newDir = Vector2.Lerp(RigidBody.Velocity, targetDir, 0.0075f);
+                newDir = Vector2.Lerp(RigidBody.Velocity, targetDir, turnRatio);
 
                 RigidBody.Velocity = newDir.Normalized() * maxSpeed;
                 //double currentAngle = Math.Acos(currentNormalizedDir.X) * 180 / 3.14;

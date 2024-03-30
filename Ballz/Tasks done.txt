@@ -22,3 +22,4 @@ Extra:
 - F key boost speed temporarily for green balls
 - T key to enable Red Chase Mode (reds slowly turn toward greens if in range)
 - Added dumb jokes about balls in the code
+- (ToDo) Implement fuzzy logic for deciding which ball to chase (Target distance, infectionTimer, Similar direction)
