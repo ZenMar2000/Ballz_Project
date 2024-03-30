@@ -240,14 +240,15 @@ namespace Ballz
                     clickedL = true;
                     float x = Game.Window.MouseX;
                     float y = Game.Window.MouseY;
+                    if (x >= 0 && y >= 0 && x < Game.Window.OrthoWidth && y < Game.Window.OrthoHeight)
+                    {
+                        mahBalls.Add(new Ball(false));
+                        mahBalls.Last().Position = new Vector2(x, y);
 
-                    mahBalls.Add(new Ball(false));
-                    mahBalls.Last().Position = new Vector2(x, y);
-
-                    Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
-                    Game.Source.Play(clokClip);
-                    Console.WriteLine("Spawned green ball");
-
+                        Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
+                        Game.Source.Play(clokClip);
+                        Console.WriteLine("Spawned green ball");
+                    }
                 }
             }
             else if (clickedL)
@@ -263,13 +264,14 @@ namespace Ballz
                     clickedR = true;
                     float x = Game.Window.MouseX;
                     float y = Game.Window.MouseY;
-
-                    mahBalls.Add(new Ball(true));
-                    mahBalls.Last().Position = new Vector2(x, y);
-                    Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
-                    Game.Source.Play(clokClip);
-                    Console.WriteLine("Spawned red ball");
-
+                    if (x >= 0 && y >= 0 && x < Game.Window.OrthoWidth && y < Game.Window.OrthoHeight)
+                    {
+                        mahBalls.Add(new Ball(true));
+                        mahBalls.Last().Position = new Vector2(x, y);
+                        Game.Source.Pitch = RandomGenerator.GetRandomInt(10, 14) * 0.1f;
+                        Game.Source.Play(clokClip);
+                        Console.WriteLine("Spawned red ball");
+                    }
                 }
             }
             else if (clickedR)

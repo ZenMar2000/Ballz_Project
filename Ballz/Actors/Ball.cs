@@ -7,6 +7,7 @@ namespace Ballz
 {
     class Ball : Actor
     {
+        #region variables
         private double turnTimer = 0;
         private AudioClip popClip = GfxMngr.GetClip("pop");
         private AudioClip thokClip = GfxMngr.GetClip("thok");
@@ -14,7 +15,9 @@ namespace Ballz
         private float turnRatio = 0.0075f;
 
         protected float infectionTimer = 0;
+        #endregion
 
+        #region properties
         public bool BeingInfected
         {
             get
@@ -35,6 +38,7 @@ namespace Ballz
                 }
             }
         }
+
         private bool _isInfected;
         public bool IsInfected
         {
@@ -54,6 +58,7 @@ namespace Ballz
 
         public float TimeBeforeInfection { get; private set; }
         public float InfectionRadius { get; private set; }
+        #endregion
 
         CircleEffect effect;
         InfectionCircle circle;
