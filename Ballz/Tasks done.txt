@@ -20,5 +20,5 @@ Extra:
 - Audio on spawn by mouse clicks
 - G key boost speed temporarily for red balls
 - F key boost speed temporarily for green balls
-- T key to enable Red Chase Mode
+- T key to enable Red Chase Mode (reds chase green if in range)
 - Added dumb jokes about balls in the code
