@@ -369,21 +369,23 @@ namespace Ballz
         {
             Vector2 dist = targetBall.Position - currentBall.Position;
 
-            distanceFL = 1-(dist.LengthSquared / currentBall.InfectionRadius);
-            infectionTimerFL = 1-targetBall.GetInfectionTimer();
+            distanceFL = 1 - (dist.LengthSquared / currentBall.InfectionRadius);
+            infectionTimerFL = 1 - targetBall.GetInfectionTimer();
             directionAffinityFL = (Math.Cos(currentBall.RigidBody.Velocity.X) - Math.Cos(targetBall.RigidBody.Velocity.X)) - 1;
 
             result = distanceFL + infectionTimerFL + directionAffinityFL;
             this.index = index;
         }
 
-        //public FuzzyLogic(double distance, double infectionTimer, double directionAffinity)
+        //public FuzzyLogic(double distance, double infectionTimer, double directionAffinity, int index)
         //{
         //    distanceFL = distance;
         //    infectionTimerFL = infectionTimer;
         //    directionAffinityFL = directionAffinity;
 
         //    result = distanceFL + infectionTimerFL + directionAffinityFL;
+        //    this.index = index;
+
         //}
     }
 }
