@@ -121,8 +121,6 @@ namespace Ballz
             bounce *= 0.15f;
 
             Vector2 otherBounce = bounce * -1;
-            otherBounce.Normalize();
-            otherBounce *= 0.15f;
 
             RigidBody.Velocity += bounce;
             RigidBody.Velocity.Normalize();
