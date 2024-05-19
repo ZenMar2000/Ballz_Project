@@ -127,18 +127,12 @@ namespace Ballz
         public override Scene OnExit()
         {
             mahBalls = null;
-            //Bg = null;
 
-            //BulletMngr.ClearAll();
-            //SpawnMngr.ClearAll();
             UpdateMngr.ClearAll();
             PhysicsMngr.ClearAll();
             DrawMngr.ClearAll();
             GfxMngr.ClearAll();
             FontMngr.ClearAll();
-            //PowerUpsMngr.ClearAll();
-
-            //DebugMngr.ClearAll();
 
             return base.OnExit();
         }
@@ -146,8 +140,6 @@ namespace Ballz
         public override void Draw()
         {
             DrawMngr.Draw();
-
-            //DebugMngr.Draw();
         }
 
         private void HandleInput()

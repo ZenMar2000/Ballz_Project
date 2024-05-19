@@ -118,7 +118,6 @@ namespace Ballz
             }
 
             bounce.Normalize();
-            bounce *= 0.15f;
 
             Vector2 otherBounce = bounce * -1;
 
@@ -170,10 +169,10 @@ namespace Ballz
 
         public override void Update()
         {
-            if (IsActive && RigidBody.Velocity != Vector2.Zero)
-            {
-                Forward = RigidBody.Velocity;
-            }
+            //if (IsActive && RigidBody.Velocity != Vector2.Zero)
+            //{
+            //    Forward = RigidBody.Velocity;
+            //}
             CheckWindowBorders();
 
             if (!IsInfected)
